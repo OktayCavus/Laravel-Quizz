@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # English Quiz Application
 
 English Quiz Application, kullanıcıların İngilizce dinleme ve okuma becerilerini geliştirmek için tasarlanmış bir web uygulamasıdır.
@@ -27,9 +25,3 @@ MySQL: Veritabanı olarak kullanıldı.
 ## Katkıda Bulunma
 
 Katkıda bulunmak isterseniz, lütfen bir çekme isteği gönderin. Her türlü katkı ve geri bildirim önemlidir!
-
-## Lisans
-
-# Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için [LICENSE](LICENSE) dosyasına bakın
-
-> > > > > > > 3348e7c129fcc83eb0da056ddd1fa83de5810466
