@@ -18,13 +18,8 @@ class ForgotPasswordController extends Controller
             // Delete all old code that user sent before.
             ResetCodePassword::where('email', $request->email)->delete();
 
-            // Generate random code
-            $data['code'] = mt_rand(100000, 999999);
-
-            // Create a new code
             $codeData = ResetCodePassword::create($request->data());
 
-            // Send email to user
             Mail::to($request->email)->send(new SendCodeResetPassword(
                 $request->email,
                 $codeData->code,

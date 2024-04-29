@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CodeCheckController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\TestsController;
 use App\Http\Controllers\UserController;
@@ -55,11 +56,21 @@ Route::prefix('admin')->middleware(['is_admin'])->group(
         Route::post('store-test', [TestsController::class, 'store']);
         Route::get('delete-test', [TestsController::class, 'destroy']);
         Route::post('update-test', [TestsController::class, 'update']);
+        Route::post('create-question', [QuestionController::class, 'store']);
+        Route::put('update-question/{id}', [QuestionController::class, 'update']);
+        Route::get('delete-question/{id}', [QuestionController::class, 'destroy']);
     }
 );
 
 Route::prefix('tests')->middleware(['check'])->group(
     function () {
         Route::get('get-test/{id}', [TestsController::class, 'show']);
+    }
+);
+
+Route::prefix('questions')->middleware(['check'])->group(
+    function () {
+        Route::get('get-question-with-test/{id?}', [QuestionController::class, 'index']);
+        Route::get('get-selected-question/{id}', [QuestionController::class, 'show']);
     }
 );

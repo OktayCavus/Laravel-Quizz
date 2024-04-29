@@ -12,25 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // public function create_user(CreateUserRequest $request)
-    // {
-    //     $user = User::create(
-    //         [
-    //             'username' => $request->username,
-    //             'password' => Hash::make($request->password),
-    //             'email' => $request->email,
-    //             'name' => $request->name,
-    //             'lastname' => $request->lastname,
-    //             'is_active' => 2,
-    //             'role_id' => 2,
-    //         ]
-    //     );
-
-    //     Mail::to($request->email)->send(new WelcomeMail([
-    //         'name' => $request->name,
-    //     ]));
-    //     return $this->apiResponse('Kullanıcı başarıyla oluşturuldu', $user,  true, 200);
-    // }
 
     public function create_user(CreateUserRequest $request)
     {
