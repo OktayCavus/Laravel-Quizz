@@ -28,6 +28,14 @@ class ResetPasswordController extends Controller
         // find user's email
         $user = User::firstWhere('email', $passwordReset->email);
 
+        if (!$user) {
+            return $this->apiResponse(
+                'Kullanıcı bulunamadı',
+                false,
+                404
+            );
+        }
+
         // update user password
         $user->update($request->only('password'));
 
