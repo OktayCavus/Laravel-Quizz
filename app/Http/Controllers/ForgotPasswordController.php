@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ForgotPasswordRequest;
 use App\Mail\SendCodeResetPassword;
 use App\Mail\WelcomeMail;
 use App\Models\ResetCodePassword;
@@ -10,12 +11,9 @@ use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(ForgotPasswordRequest $request)
     {
         try {
-            $data = $request->validate([
-                'email' => 'required|email|exists:users',
-            ]);
 
             // Delete all old code that user sent before.
             ResetCodePassword::where('email', $request->email)->delete();
@@ -24,7 +22,7 @@ class ForgotPasswordController extends Controller
             $data['code'] = mt_rand(100000, 999999);
 
             // Create a new code
-            $codeData = ResetCodePassword::create($data);
+            $codeData = ResetCodePassword::create($request->data());
 
             // Send email to user
             Mail::to($request->email)->send(new SendCodeResetPassword(
