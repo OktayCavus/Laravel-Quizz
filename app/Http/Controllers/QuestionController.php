@@ -13,15 +13,22 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(int $test_id = 0)
+    public function index()
     {
+        $test_id = request('test_id', 0);
+        $limit = request('limit', 0);
+
+        $query = Question::with(['options:id,question_id,option_text,is_correct']);
+
         if ($test_id != 0) {
-            $questionList = Question::with(['options:id,question_id,option_text,is_correct'])
-                ->where('test_id', $test_id)
-                ->get();
-        } else {
-            $questionList = Question::with(['options:id,question_id,option_text,is_correct'])->get();
+            $query->where('test_id', $test_id);
         }
+
+        if ($limit > 0) {
+            $query->limit($limit);
+        }
+
+        $questionList = $query->get();
 
         $formattedQuestions = $questionList->map(function ($question) {
             return [
@@ -39,6 +46,7 @@ class QuestionController extends Controller
 
         return $this->apiResponse('Soru ve cevaplar başarıyla getirildi', true, 200, $formattedQuestions);
     }
+
 
     /**
      * Show the form for creating a new resource.

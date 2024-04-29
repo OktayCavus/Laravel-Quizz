@@ -70,7 +70,8 @@ Route::prefix('tests')->middleware(['check'])->group(
 
 Route::prefix('questions')->middleware(['check'])->group(
     function () {
-        Route::get('get-question-with-test/{id?}', [QuestionController::class, 'index']);
+        // Route::get('get-question-with-test/{id?}', [QuestionController::class, 'index']);
+        Route::get('get-question-with-test', [QuestionController::class, 'index']);
         Route::get('get-selected-question/{id}', [QuestionController::class, 'show']);
     }
 );
