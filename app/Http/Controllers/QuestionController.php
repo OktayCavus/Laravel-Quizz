@@ -17,6 +17,7 @@ class QuestionController extends Controller
     {
         $test_id = request('test_id', 0);
         $limit = request('limit', 0);
+        $page = request('page', 0);
 
         $query = Question::with(['options:id,question_id,option_text,is_correct']);
 
@@ -26,6 +27,11 @@ class QuestionController extends Controller
 
         if ($limit > 0) {
             $query->limit($limit);
+        }
+
+        if ($page > 0) {
+            $offset = ($page - 1) * $limit;
+            $query->offset($offset);
         }
 
         $questionList = $query->get();
