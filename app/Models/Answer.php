@@ -17,6 +17,8 @@ class Answer extends Model
         'category_id',
         'test_id',
         'question_id',
+        'selected_option_id',
         'is_correct',
+
     ];
 }

@@ -21,6 +21,10 @@ class QuestionController extends Controller
 
         $query = Question::with(['options:id,question_id,option_text,is_correct']);
 
+        // tests tablosunu question tablosuyla birleştir ve category_id'yi seç
+        $query->select('questions.*', 'tests.category_id as test_category_id')
+            ->join('tests', 'questions.test_id', '=', 'tests.id');
+
         if ($test_id != 0) {
             $query->where('test_id', $test_id);
         }
@@ -36,11 +40,16 @@ class QuestionController extends Controller
 
         $questionList = $query->get();
 
+        if ($questionList->isEmpty()) {
+            return $this->apiResponse('Soru bulunamadı.', false, 404);
+        }
+
         $formattedQuestions = $questionList->map(function ($question) {
             return [
                 'id' => $question->id,
                 'test_id' => $question->test_id,
                 'question_text' => $question->question_text,
+                'test_category_id' => $question->test_category_id,
                 'options' => $question->options->map(function ($option) {
                     return [
                         'option_text' => $option->option_text,

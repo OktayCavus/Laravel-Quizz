@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CodeCheckController;
@@ -19,7 +20,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth');
 
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
-
+Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 Route::group(
     [
         'middleware' => 'api',
@@ -49,7 +50,7 @@ Route::prefix('admin')->middleware(['is_admin'])->group(
         Route::get('restore/{id}', [UserController::class, 'restore_user']);
         Route::get('delete-user/{id}', [UserController::class, 'delete_user']);
         Route::get('get-user/{id?}', [UserController::class, 'get_user']);
-        Route::post('store-test', [CategoriesController::class, 'store']);
+        Route::post('store-category', [CategoriesController::class, 'store']);
         Route::get('get-category/{id}', [CategoriesController::class, 'show']);
         Route::get('get-all-category', [CategoriesController::class, 'index']);
         Route::get('delete-category/{id}', [CategoriesController::class, 'destroy']);
@@ -71,8 +72,9 @@ Route::prefix('tests')->middleware(['check'])->group(
 
 Route::prefix('questions')->middleware(['check'])->group(
     function () {
-        // Route::get('get-question-with-test/{id?}', [QuestionController::class, 'index']);
         Route::get('get-question-with-test', [QuestionController::class, 'index']);
         Route::get('get-selected-question/{id}', [QuestionController::class, 'show']);
+        Route::post('submit-answer', [AnswerController::class, 'submitAnswer']);
+        Route::get('get-test-answer/{id?}', [AnswerController::class, 'userTestAnswers']);
     }
 );

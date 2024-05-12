@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('test_id')->constrained('tests')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('question_id')->constrained('questions')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('selected_option_id')->constrained('options')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('is_correct');
             $table->timestamps();
             $table->softDeletes();

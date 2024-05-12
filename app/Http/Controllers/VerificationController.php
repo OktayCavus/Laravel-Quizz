@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 class VerificationController extends Controller
 {
 
-
     public function verify($user_id, Request $request)
     {
         if (!$request->hasValidSignature()) {
@@ -25,14 +24,4 @@ class VerificationController extends Controller
 
         return view('emails.welcomee');
     }
-
-    // public function resend() {
-    //     if (auth()->user()->hasVerifiedEmail()) {
-    //         return response()->json(["msg" => "Email already verified."], 400);
-    //     }
-
-    //     auth()->user()->sendEmailVerificationNotification();
-
-    //     return response()->json(["msg" => "Email verification link sent on your email id"]);
-    // }
 }
