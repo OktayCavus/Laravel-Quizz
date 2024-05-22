@@ -6,8 +6,9 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+
+
 
 
 class UserController extends Controller
@@ -25,7 +26,7 @@ class UserController extends Controller
             'role_id' => 2,
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         return $this->apiResponse('Kullanıcı başarıyla oluşturuldu', true, 200, $user);
     }
@@ -123,6 +124,9 @@ class UserController extends Controller
         $user->restore();
         return $this->apiResponse('Kullanıcı başarıyla geri getirildi', true, 200, $user);
     }
+
+
+
 
 
     public function role_name()

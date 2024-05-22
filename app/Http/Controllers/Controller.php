@@ -10,7 +10,7 @@ abstract class Controller
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    protected function apiResponse(string $message = "",  bool $status = true, int $statusCode = 200, $data = [])
+    protected function apiResponse(string $message = "",  bool $status = true, int $statusCode = 200, $data = null)
     {
         return response()->json(
             [

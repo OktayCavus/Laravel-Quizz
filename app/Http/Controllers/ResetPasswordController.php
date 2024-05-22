@@ -12,10 +12,9 @@ class ResetPasswordController extends Controller
 {
     public function __invoke(ResetPasswordRequest $request)
     {
-        // find the code
+
         $passwordReset = ResetCodePassword::firstWhere('code', $request->code);
 
-        // check if it does not expired: the time is one hour
         if ($passwordReset->created_at > now()->addHour()) {
             $passwordReset->delete();
             return $this->apiResponse(
@@ -25,7 +24,6 @@ class ResetPasswordController extends Controller
             );
         }
 
-        // find user's email
         $user = User::firstWhere('email', $passwordReset->email);
 
         if (!$user) {

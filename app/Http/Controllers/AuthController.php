@@ -56,6 +56,7 @@ class AuthController extends Controller
 
     public function me()
     {
-        return response()->json(auth()->user());
+
+        return $this->apiResponse('Başarıyla getirildi', true, 200, auth()->user());
     }
 }

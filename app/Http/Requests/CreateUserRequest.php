@@ -57,8 +57,8 @@ class CreateUserRequest extends FormRequest
             'email.email' => 'E-mail formatında olmalıdır',
             'email.unique' => 'E-posta daha önce kullanılmış',
             'password.required' =>  'Parola alanı boş bırakılamaz',
-            'password.min' => 'En az 8 karakterden oluşmalı',
-            'password.max' => 'En fazla 255 karakter içerebilir',
+            'password.min' => 'Şifre en az 8 karakterden oluşmalı',
+            'password.max' => 'Şifre en fazla 255 karakter içerebilir',
             'password.regex' => 'Şifre en az bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter içermelidir.'
         ];
     }

@@ -63,12 +63,14 @@ class AnswerController extends Controller
                 ->join('tests', 'answers.test_id', '=', 'tests.id')
                 ->join('questions', 'answers.question_id', '=', 'questions.id')
                 ->join('options', 'answers.selected_option_id', '=', 'options.id')
+                ->join('categories', 'answers.category_id', '=', 'categories.id')
                 ->get();
         } else {
             $tests = Answer::where('user_id', $user_id)
                 ->join('tests', 'answers.test_id', '=', 'tests.id')
                 ->join('questions', 'answers.question_id', '=', 'questions.id')
                 ->join('options', 'answers.selected_option_id', '=', 'options.id')
+                ->join('categories', 'answers.category_id', '=', 'categories.id')
                 ->get();
         }
 
@@ -79,8 +81,8 @@ class AnswerController extends Controller
         $responses = [];
         foreach ($tests as $test) {
             $response = [
-                'user_id' => $test->user_id,
                 'category_id' => $test->category_id,
+                'category_name' => $test->type,
                 'test_id' => $test->test_id,
                 'question_id' => $test->question_id,
                 'selected_option_id' => $test->selected_option_id,

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Mail\UserCreated;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -82,5 +84,12 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail, CanRe
     public function role(): BelongsTo
     {
         return $this->belongsTo(Roles::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($model) {
+            Mail::to($model->email)->send(new UserCreated($model));
+        },);
     }
 }

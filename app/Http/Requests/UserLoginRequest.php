@@ -24,7 +24,7 @@ class UserLoginRequest extends FormRequest
         return [
             'email' => 'required_without:username|email',
             'username' => 'required_without:email',
-            'password' => 'required|min:8|max:255'
+            'password' => 'required'
         ];
     }
     public function messages()
@@ -36,8 +36,6 @@ class UserLoginRequest extends FormRequest
             'username.required' => 'Kullanıcı adı alanı boş bırakılamaz',
             'username.unique' => 'Kullanıcı adı daha önce kullanılmış',
             'password.required' =>  'Parola alanı boş bırakılamaz',
-            'password.min' => 'En az 8 karakterden oluşmalı',
-            'password.max' => 'En fazla 255 karakter içerebilir',
             'email.required_without' => 'E-posta veya kullanıcı adı alanı boş bırakılamaz'
         ];
     }

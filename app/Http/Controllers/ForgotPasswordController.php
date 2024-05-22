@@ -15,7 +15,6 @@ class ForgotPasswordController extends Controller
     {
         try {
 
-            // Delete all old code that user sent before.
             ResetCodePassword::where('email', $request->email)->delete();
 
             $codeData = ResetCodePassword::create($request->data());

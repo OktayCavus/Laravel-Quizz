@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CodeCheckRequest as RequestsCodeCheckRequest;
-use App\Models\ResetCodePassword;
+use App\Http\Requests\ChangeEmailCodeRequest;
+use App\Models\ChangeEmailModel;
 
-class CodeCheckController extends Controller
+class ChangeEmailCodeCheckController extends Controller
 {
-
-    public function __invoke(RequestsCodeCheckRequest $request)
+    public function __invoke(ChangeEmailCodeRequest $request)
     {
-        $passwordReset = ResetCodePassword::firstWhere('code', $request->code);
+        $passwordReset = ChangeEmailModel::firstWhere('code', $request->code);
 
         if ($passwordReset->isExpire()) {
             return $this->apiResponse('Kullanılmış veya süresi dolmuş kod', false, 422);

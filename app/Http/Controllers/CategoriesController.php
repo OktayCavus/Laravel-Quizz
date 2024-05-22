@@ -14,7 +14,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $categoryList = Categories::all();
-        return $categoryList;
+        return $this->apiResponse('Başarıyla getirildi', true, 200, $categoryList);
     }
 
     /**
