@@ -49,11 +49,13 @@ class QuestionController extends Controller
                 'id' => $question->id,
                 'test_id' => $question->test_id,
                 'question_text' => $question->question_text,
+                'question_id' => $question->id,
                 'test_category_id' => $question->test_category_id,
                 'options' => $question->options->map(function ($option) {
                     return [
                         'option_text' => $option->option_text,
-                        'is_correct' => $option->is_correct
+                        'is_correct' => $option->is_correct,
+                        'option_id' => $option->id,
                     ];
                 })
             ];
@@ -74,33 +76,63 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(QuestionRequest $request)
+    // {
+    //     $question = Question::create([
+    //         'test_id' => $request->test_id,
+    //         'question_text' => $request->question_text
+    //     ]);
+
+    //     $questionId = $question->id;
+
+    //     $options = [];
+
+    //     foreach ($request->options as $optionData) {
+    //         $option = Options::create([
+    //             'question_id' => $questionId,
+    //             'option_text' => $optionData['option_text'],
+    //             'is_correct' => $optionData['is_correct']
+    //         ]);
+
+    //         $options[] = $option;
+    //     }
+
+    //     $responseData = [
+    //         'test' => $question,
+    //         'options' => $options
+    //     ];
+
+    //     return $this->apiResponse('Soru ve cevaplar başarıyla oluşturuldu', true, 200, $responseData);
+    // }
     public function store(QuestionRequest $request)
     {
-        $question = Question::create([
-            'test_id' => $request->test_id,
-            'question_text' => $request->question_text
-        ]);
+        $responseData = [];
 
-        $questionId = $question->id;
-
-        $options = [];
-
-        foreach ($request->options as $optionData) {
-            $option = Options::create([
-                'question_id' => $questionId,
-                'option_text' => $optionData['option_text'],
-                'is_correct' => $optionData['is_correct']
+        foreach ($request->questions as $questionData) {
+            $question = Question::create([
+                'test_id' => $questionData['test_id'],
+                'question_text' => $questionData['question_text']
             ]);
 
-            $options[] = $option;
+            $options = [];
+
+            foreach ($questionData['options'] as $optionData) {
+                $option = Options::create([
+                    'question_id' => $question->id,
+                    'option_text' => $optionData['option_text'],
+                    'is_correct' => $optionData['is_correct']
+                ]);
+
+                $options[] = $option;
+            }
+
+            $responseData[] = [
+                'test' => $question,
+                'options' => $options
+            ];
         }
 
-        $responseData = [
-            'test' => $question,
-            'options' => $options
-        ];
-
-        return $this->apiResponse('Soru ve cevaplar başarıyla oluşturuldu', true, 200, $responseData);
+        return $this->apiResponse('Sorular başarıyla oluşturuldu', true, 200, $responseData);
     }
 
     /**

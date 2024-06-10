@@ -37,6 +37,7 @@ class UserController extends Controller
         if (!$userToDelete) {
             return $this->apiResponse('Kullanıcı bulunamadı', false, 404);
         }
+        $userToDelete->update(['is_active' => 2]);
         $userToDelete->delete();
         return $this->apiResponse('Kullanıcı silme işlemi başarılı',  true, 200, $userToDelete);
     }
@@ -105,7 +106,7 @@ class UserController extends Controller
         if (!$userToUpdate) {
             return $this->apiResponse('Kullanıcı bulunamadı', false, 404);
         }
-        $userToUpdate->update($request->only(['name', 'lastname', 'username']));
+        $userToUpdate->update($request->only(['name', 'lastname', 'username', 'is_active', 'role_id']));
         if ($request->filled('current_password') && $request->filled('new_password')) {
             $userToUpdate->update([
                 'password' => Hash::make($request->new_password),
@@ -121,6 +122,7 @@ class UserController extends Controller
         if (!$user) {
             return $this->apiResponse('Kullanıcı bulunamadı', false, 404);
         }
+        $user->update(['is_active' => 1]);
         $user->restore();
         return $this->apiResponse('Kullanıcı başarıyla geri getirildi', true, 200, $user);
     }

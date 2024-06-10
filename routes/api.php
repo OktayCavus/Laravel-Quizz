@@ -29,7 +29,6 @@ Route::group(
     function () {
         Route::post('create', [UserController::class, 'create_user']);
         Route::post('login', [AuthController::class, 'login']);
-        // Route::post('reset-password', [UserController::class, 'reset_password']);
         Route::get('aa', [UserController::class, 'role_name']);
         Route::post('password/email',  ForgotPasswordController::class);
         Route::post('password/reset', ResetPasswordController::class);
@@ -54,7 +53,6 @@ Route::prefix('admin')->middleware(['is_admin'])->group(
         Route::get('delete-user/{id}', [UserController::class, 'delete_user']);
         Route::get('get-user/{id?}', [UserController::class, 'get_user']);
         Route::post('store-category', [CategoriesController::class, 'store']);
-        Route::get('get-category/{id}', [CategoriesController::class, 'show']);
         Route::get('delete-category/{id}', [CategoriesController::class, 'destroy']);
         Route::post('update-user-from-admin', [UserController::class, 'update_from_admin']);
         Route::post('store-test', [TestsController::class, 'store']);
@@ -70,6 +68,9 @@ Route::prefix('tests')->middleware(['check'])->group(
     function () {
         Route::get('get-test/{id}', [TestsController::class, 'show']);
         Route::get('get-all-category', [CategoriesController::class, 'index']);
+        Route::get('get-category/{id}', [CategoriesController::class, 'show']);
+
+        Route::get('show-user-test/{id}', [AnswerController::class, 'show']);
     }
 );
 
@@ -79,5 +80,7 @@ Route::prefix('questions')->middleware(['check'])->group(
         Route::get('get-selected-question/{id}', [QuestionController::class, 'show']);
         Route::post('submit-answer', [AnswerController::class, 'submitAnswer']);
         Route::get('get-test-answer/{id?}', [AnswerController::class, 'userTestAnswers']);
+        Route::get('get-test-category-answer/{category_id?}/{test_id?}', [AnswerController::class, 'userTestCategoryAnswers']);
+        Route::get('get_test_with_category', [AnswerController::class, 'userTestsWithCategory']);
     }
 );
